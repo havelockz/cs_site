@@ -12,6 +12,15 @@
         {{ form.as_p }}
         <button class="btn btn-secondary">Додати</button>
 </div>
-{% endif %}
+<script>
+        var name = "{{ user.id }}";
+        document.getElementById("elder").value = name;
+
+</script>
+
+{% else %}
 Ви не маєте доступу до даної сторінки
+
+{% endif %}
+
 {% endblock %}
