@@ -7,11 +7,11 @@
 <small>By: {{ post.author }} -
     {{ post.post_date }}
     {% if user.is_authenticated %}
-    {% if user.id == post.author.id %}
-    -
-    <a href="{% url 'update_post' post.pk %}">(Edit)</a>
-    <a href="{% url 'delete_post' post.pk %}">(Delete)</a>
-    {% endif %}
+        {% if user.id == post.author.id %}
+     -
+        <a href="{% url 'update_post' post.pk %}">(Edit)</a>
+        <a href="{% url 'delete_post' post.pk %}">(Delete)</a>
+     {% endif %}
     {% endif %}
 </small>
 <br/>
@@ -27,9 +27,21 @@
 <br/>
 <form action="{% url 'like_post' post.pk %}" method="POST">
     {% csrf_token %}
-    <button type="submit" ,
-            name="post_id" ,
-            value="{{ post.id }}" ,
-            class="btn btn-primary btn-sm">Like</button> - {{ total_likes }} Likes
+    {% if user.is_authenticated %}
+        {% if liked %}
+            <button type="submit" ,
+                name="post_id" ,
+                value="{{ post.id }}" ,
+                class="btn btn-danger btn-sm">Невподобайка</button>
+        {% else %}
+            <button type="submit" ,
+                name="post_id" ,
+                value="{{ post.id }}" ,
+                class="btn btn-primary btn-sm">Вподобайка</button>
+        {% endif %}
+    {% else %}
+        <a class="nav-link" href="{% url 'login' %}">Увійти<small> для оцінки</small></a>
+    {% endif %}
+    - {{ total_likes }} Likes
 </form>
 {% endblock %}
